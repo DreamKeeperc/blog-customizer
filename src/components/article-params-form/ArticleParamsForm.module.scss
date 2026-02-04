@@ -6,11 +6,13 @@
 	overflow: scroll;
 	transform: translate(-616px);
 	transition: transform 0.5s ease;
+  background-color: rgba(255, 0, 0, 0.2);
 }
 
 .container_open {
 	transform: translate(0);
 }
+
 
 .form {
 	display: flex;
@@ -23,6 +25,7 @@
 	padding: 50px 31px;
 	background-color: #ffffff;
 	border-right: 1px solid #000000;
+	gap: 50px;
 }
 
 .bottomContainer {
