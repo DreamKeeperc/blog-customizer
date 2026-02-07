@@ -10,6 +10,7 @@ import {
 	ArticleStateType,
 	backgroundColors,
 	contentWidthArr,
+	defaultArticleState,
 	fontColors,
 	fontFamilyOptions,
 	fontSizeOptions,
@@ -18,21 +19,17 @@ import {
 import { Separator } from 'src/ui/separator';
 
 type FormSubmit = {
-	onFormSubmit: () => void;
-	onFormReset: () => void;
-	stateForm: ArticleStateType;
-	setStateForm: (stateForm: ArticleStateType) => void;
+	currentStateForm: ArticleStateType;
+	onSetStateForm: (state: ArticleStateType) => void;
 };
 
 export const ArticleParamsForm = ({
-	onFormSubmit,
-	onFormReset,
-	stateForm,
-	setStateForm,
+	currentStateForm,
+	onSetStateForm,
 }: FormSubmit) => {
 	const sideBarRef = useRef<HTMLDivElement>(null);
-
 	const [isFormOpen, setIsFormOpen] = useState(false);
+	const [defaultState, setDefaultState] = useState(currentStateForm);
 
 	const onClick = () => {
 		setIsFormOpen(!isFormOpen);
@@ -68,17 +65,17 @@ export const ArticleParamsForm = ({
 
 	const handleSubmit = (e: React.FormEvent<Element>) => {
 		e.preventDefault();
-		onFormSubmit();
+		onSetStateForm(defaultState);
 	};
 
 	const handleReset = (e: React.FormEvent<Element>) => {
 		e.preventDefault();
-		onFormReset();
+		onSetStateForm(defaultArticleState);
 	};
 
 	const updateFormStyleField = (field: keyof ArticleStateType) => {
 		return (value: OptionType) => {
-			setStateForm({ ...stateForm, [field]: value });
+			setDefaultState({ ...defaultState, [field]: value });
 		};
 	};
 
@@ -98,33 +95,33 @@ export const ArticleParamsForm = ({
 						Задайте параметры
 					</Text>
 					<Select
-						selected={stateForm.fontFamilyOption}
+						selected={defaultState.fontFamilyOption}
 						options={fontFamilyOptions}
 						title={'Шрифт'}
 						onChange={updateFormStyleField('fontFamilyOption')}
 					/>
 					<RadioGroup
-						selected={stateForm.fontSizeOption}
+						selected={defaultState.fontSizeOption}
 						options={fontSizeOptions}
-						name={stateForm.fontFamilyOption.className}
+						name={defaultState.fontFamilyOption.className}
 						title={'Размер шрифта'}
 						onChange={updateFormStyleField('fontSizeOption')}
 					/>
 					<Select
-						selected={stateForm.fontColor}
+						selected={defaultState.fontColor}
 						options={fontColors}
 						title={'Цвет шрифта'}
 						onChange={updateFormStyleField('fontColor')}
 					/>
 					<Separator />
 					<Select
-						selected={stateForm.backgroundColor}
+						selected={defaultState.backgroundColor}
 						options={backgroundColors}
 						title={'Цвет фона'}
 						onChange={updateFormStyleField('backgroundColor')}
 					/>
 					<Select
-						selected={stateForm.contentWidth}
+						selected={defaultState.contentWidth}
 						options={contentWidthArr}
 						title={'Ширина контента'}
 						onChange={updateFormStyleField('contentWidth')}

@@ -12,34 +12,22 @@ const root = createRoot(domNode);
 
 const App = () => {
 	const [stateForm, setStateForm] = useState(defaultArticleState);
-	const [appliedStateForm, setAppliedStateForm] = useState(defaultArticleState);
-
-	const onButtonSubmit = () => {
-		setAppliedStateForm(stateForm);
-	};
-
-	const onButtonReset = () => {
-		setStateForm(defaultArticleState);
-		setAppliedStateForm(defaultArticleState);
-	};
 
 	return (
 		<main
 			className={styles.main}
 			style={
 				{
-					'--font-family': appliedStateForm.fontFamilyOption.value,
-					'--font-size': appliedStateForm.fontSizeOption.value,
-					'--font-color': appliedStateForm.fontColor.value,
-					'--container-width': appliedStateForm.contentWidth.value,
-					'--bg-color': appliedStateForm.backgroundColor.value,
+					'--font-family': stateForm.fontFamilyOption.value,
+					'--font-size': stateForm.fontSizeOption.value,
+					'--font-color': stateForm.fontColor.value,
+					'--container-width': stateForm.contentWidth.value,
+					'--bg-color': stateForm.backgroundColor.value,
 				} as CSSProperties
 			}>
 			<ArticleParamsForm
-				stateForm={stateForm}
-				setStateForm={setStateForm}
-				onFormSubmit={onButtonSubmit}
-				onFormReset={onButtonReset}
+				currentStateForm={stateForm}
+				onSetStateForm={setStateForm}
 			/>
 			<Article />
 		</main>
